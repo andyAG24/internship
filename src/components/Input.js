@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const InputWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
     padding: 10px 0;
     input {
         padding: 10px;
@@ -21,7 +21,7 @@ const InputWrapper = styled.div`
 function Input(props) {
     return (
         <InputWrapper>
-            { props.label && props.label !== '' && 
+            { props.label && 
                 <label>{props.label}</label>
             }
             <input placeholder={props.placeholder} value={props.value}
@@ -30,8 +30,12 @@ function Input(props) {
     );
 }
 
-// Input = styled.div`
-//     font-size: 20px;
-// `;
+Input.propTypes = {
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    value: PropTypes.string,
+    type: PropTypes.string,
+    onChange: PropTypes.func
+}
 
 export default Input;

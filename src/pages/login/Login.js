@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
-import { Input, Button } from '../../components';
+import { Input, Button } from 'components';
 
-const Wrapper = styled.div`
-    // font-size: 20px;
-    width: 400px;
+const LoginFormWrapper = styled.div`
     border-radius: 20px;
     box-shadow: 0px 2px 20px 0px black;
     margin: 40px auto 0 auto;
-
+    max-width: 400px;
+    min-width: 200px;
 `;
 
 const InfoMessage = styled.div`
     color: red;
 `;
 
-const Container = styled.div`
+const LoginForm = styled.div`
     padding: 130px 35px;
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
 `;
 
 const cridentials = {
@@ -29,31 +31,34 @@ function Login() {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [infoMessage, setInfoMessage] = useState('');
+    const [isDisabledButton, setIsDisabledButton] = useState(false);
 
     const history = useHistory();
 
     function handleLoginChange(ev) {
         let login = ev.target.value;
         setLogin(login);
+        setIsDisabledButton(false);
+        setInfoMessage('');
     }
 
     function handlePasswordChange(ev) {
         let password = ev.target.value;
         setPassword(password);
+        setIsDisabledButton(false);
+        setInfoMessage('');
     }
 
     function isValidatedCridentials() {
-        if ((login !== '') && (password !== '')) {
-            if ((login !== cridentials.login) || (password !== cridentials.password)) {
-                setInfoMessage('Неправильный логин или пароль. Попробуйте еще раз.');
-                return false;
-            } else {
-                return true;
-            }
-        } else {
+        if (!login || !password) {
             setInfoMessage('Не все поля заполнены.');
             return false;
-        }
+        } 
+        if (login === cridentials.login && password === cridentials.password) {
+            return true;
+        } 
+        setInfoMessage('Неправильный логин или пароль. Попробуйте еще раз.');
+        return false;
     }
 
     function redirectToMain() {
@@ -63,21 +68,21 @@ function Login() {
 
     function signIn() {
         setInfoMessage('');
+        !isValidatedCridentials() && setIsDisabledButton(true);
         isValidatedCridentials() && redirectToMain();
     }
 
-
     return (
-        <Wrapper>
-            <Container>
+        <LoginFormWrapper>
+            <LoginForm>
                 <Input label='Логин' name='login' onChange={handleLoginChange} />
                 <Input label='Пароль' name='password' type='password' onChange={handlePasswordChange} />
-                { infoMessage !== '' &&
+                { infoMessage &&
                     <InfoMessage>{infoMessage}</InfoMessage>
                 }
-                <Button onClick={signIn} title='Войти' />
-            </Container>
-        </Wrapper>
+                <Button onClick={signIn} disabled={isDisabledButton} title='Войти' />
+            </LoginForm>
+        </LoginFormWrapper>
     );
 }
 

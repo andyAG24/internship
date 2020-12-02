@@ -3,8 +3,7 @@ import './App.css';
 import {
     Route,
     Switch,
-    Redirect,
-    withRouter
+    Redirect
   } from "react-router-dom"
 
 import Login from './pages/login/Login';

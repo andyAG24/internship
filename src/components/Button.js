@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const ButtonWrapper = styled.button`
     width: 100%;  
@@ -14,12 +15,21 @@ const ButtonWrapper = styled.button`
         cursor: pointer;
         background-color: #ccc;
     }  
+    :disabled {
+        cursor: not-allowed;
+    }
 `;
 
 function Button(props) {
     return (
-        <ButtonWrapper onClick={props.onClick}>{props.title}</ButtonWrapper>
+        <ButtonWrapper disabled={props.disabled} onClick={props.onClick}>{props.title}</ButtonWrapper>
     );
+}
+
+Button.propTypes = {
+    title: PropTypes.string,
+    onClick: PropTypes.func,
+    disabled: PropTypes.bool
 }
 
 export default Button;
