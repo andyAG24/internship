@@ -23,7 +23,7 @@ const LoginForm = styled.div`
   max-width: 500px;
 `;
 
-const cridentials = {
+const credentials = {
   login: 'admin',
   password: 'admin',
 };
@@ -32,28 +32,25 @@ function Login() {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
-  const [isDisabledButton, setIsDisabledButton] = useState(false);
 
   const history = useHistory();
 
   function handleLoginChange(ev) {
     setLogin(ev.target.value);
-    setIsDisabledButton(false);
     setInfoMessage('');
   }
 
   function handlePasswordChange(ev) {
     setPassword(ev.target.value);
-    setIsDisabledButton(false);
     setInfoMessage('');
   }
 
-  function isValidatedCridentials() {
+  function isValidCredentials() {
     if (!login || !password) {
       setInfoMessage('Не все поля заполнены.');
       return false;
     }
-    if (login === cridentials.login && password === cridentials.password) {
+    if (login === credentials.login && password === credentials.password) {
       return true;
     }
     setInfoMessage('Неправильный логин или пароль. Попробуйте еще раз.');
@@ -67,8 +64,7 @@ function Login() {
 
   function signIn() {
     setInfoMessage('');
-    if (!isValidatedCridentials()) setIsDisabledButton(true);
-    if (isValidatedCridentials()) redirectToMain();
+    if (isValidCredentials()) redirectToMain();
   }
 
   return (
@@ -78,7 +74,7 @@ function Login() {
         <Input label='Пароль' name='password' type='password' onChange={handlePasswordChange} />
         { infoMessage
           && <InfoMessage>{infoMessage}</InfoMessage>}
-        <Button onClick={signIn} disabled={isDisabledButton} title='Войти' />
+        <Button onClick={signIn} disabled={!!infoMessage} title='Войти' />
       </LoginForm>
     </LoginFormWrapper>
   );

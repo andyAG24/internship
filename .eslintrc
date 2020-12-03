@@ -7,7 +7,6 @@
     "node": true,
     "browser": true
   },
-// # linebreak-style: ["error", "windows"]
   "rules": {
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
   }
