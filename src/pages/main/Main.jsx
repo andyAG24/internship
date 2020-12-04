@@ -1,8 +1,9 @@
 import React from 'react';
+import CountryList from './components/CountryList.jsx';
 
 function Main() {
   return (
-    <h1>MAIN</h1>
+    <CountryList />
   );
 }
 
