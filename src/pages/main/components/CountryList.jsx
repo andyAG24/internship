@@ -6,6 +6,9 @@ const API_URL = 'https://restcountries.eu/rest/v2/all';
 
 const CountryListBlock = styled.ul`
   list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 function CountryList() {
@@ -23,12 +26,16 @@ function CountryList() {
     if (countries.length === 0) gettingCountries();
   });
 
+  function onCountryClick() {
+  }
+
   function renderCountries() {
     return countries.map((item) => (
       <CountryItem
         name={item.name}
         key={item.name}
         flag={item.flag}
+        onClick={onCountryClick(item)}
       />
     ));
   }
