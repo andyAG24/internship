@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CountryItem from './CountryItem.jsx';
+import CountryItem from './CountryItem';
 
 const API_URL = 'https://restcountries.eu/rest/v2/all';
 
@@ -36,6 +36,7 @@ function CountryList() {
         key={item.name}
         flag={item.flag}
         onClick={onCountryClick(item)}
+        alpha3Code={item.alpha3Code}
       />
     ));
   }

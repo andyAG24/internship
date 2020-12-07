@@ -1,7 +1,6 @@
 {
   "extends": [
-    "airbnb",
-    "airbnb-base"
+    "airbnb"
   ],
   "env": {
     "node": true,
@@ -9,5 +8,12 @@
   },
   "rules": {
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
   }
 }

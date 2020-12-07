@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
-// eslint-disable-next-line import/no-unresolved
 import { Input, Button } from 'components';
 
 const LoginFormWrapper = styled.div`
@@ -47,13 +46,13 @@ function Login() {
 
   function isValidCredentials() {
     if (!login || !password) {
-      setInfoMessage('Не все поля заполнены.');
+      setInfoMessage('Not all fields are filled.');
       return false;
     }
     if (login === credentials.login && password === credentials.password) {
       return true;
     }
-    setInfoMessage('Неправильный логин или пароль. Попробуйте еще раз.');
+    setInfoMessage('Invalid login or password. Try again.');
     return false;
   }
 
@@ -70,11 +69,11 @@ function Login() {
   return (
     <LoginFormWrapper>
       <LoginForm>
-        <Input label='Логин' name='login' onChange={handleLoginChange} />
-        <Input label='Пароль' name='password' type='password' onChange={handlePasswordChange} />
+        <Input label="Login" name="login" onChange={handleLoginChange} />
+        <Input label="Password" name="password" type="password" onChange={handlePasswordChange} />
         { infoMessage
           && <InfoMessage>{infoMessage}</InfoMessage>}
-        <Button onClick={signIn} disabled={!!infoMessage} title='Войти' />
+        <Button onClick={signIn} disabled={!!infoMessage} title="Sign in" />
       </LoginForm>
     </LoginFormWrapper>
   );
