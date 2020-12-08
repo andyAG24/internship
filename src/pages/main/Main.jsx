@@ -26,7 +26,8 @@ function Main() {
   return (
     <Switch>
       <Route exact path="/" render={() => <CountryList countries={countries} />} />
-      <Route path="/country/:alpha3Code" render={() => <CountryInfo countries={countries} />} />
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Route path="/country/:alpha3Code" render={({ match }) => <CountryInfo countries={countries} match={match} />} />
     </Switch>
   );
 }

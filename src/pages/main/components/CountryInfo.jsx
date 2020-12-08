@@ -17,9 +17,7 @@ const InfoTableRow = styled.tr`
 `;
 
 function CountryInfo({ countries, match }) {
-  const {
-    params: { alpha3Code },
-  } = match;
+  const { alpha3Code } = match.params;
   const [country, setCountry] = useState({});
   const [languages, setLanguages] = useState('');
 
@@ -40,10 +38,8 @@ function CountryInfo({ countries, match }) {
   }
 
   useEffect(() => {
-    // countries.subscribe(() => findCountry());
-    // if (countries && countries.length !== 0) findCountry();
-    // if (Object.keys(country) !== 0) getLanguagesString();
-    console.log(countries);
+    if (countries && countries.length !== 0) findCountry();
+    if (country && Object.keys(country) !== 0) getLanguagesString();
   });
 
   function renderCountryInfo() {
@@ -233,7 +229,7 @@ function CountryInfo({ countries, match }) {
 
   return (
     <>
-      <Link to="/main">Назад</Link>
+      <Link to="/">Назад</Link>
       { country && renderCountryInfo() }
     </>
   );

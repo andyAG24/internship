@@ -14,9 +14,8 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        {/* <Route path="/country/:alpha3Code" component={CountryInfo} /> */}
-        <Route path="/login" component={Login} />
-        <Route exact path="/" component={Main} />
+        <Route exact path="/login" component={Login} />
+        <Route path="/" component={Main} />
       </Switch>
     </div>
   );
