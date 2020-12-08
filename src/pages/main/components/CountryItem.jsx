@@ -27,11 +27,10 @@ const CountryName = styled.span`
 function CountryItem({
   name,
   flag,
-  onClick,
   alpha3Code,
 }) {
   return (
-    <CountryItemWrapper key={name} onClick={onClick}>
+    <CountryItemWrapper key={name}>
       <CountryFlag src={flag} alt="Country flag" />
       <CountryName>
         <Link to={`/country/${alpha3Code}`}>{name}</Link>
@@ -43,14 +42,12 @@ function CountryItem({
 CountryItem.propTypes = {
   name: PropTypes.string,
   flag: PropTypes.string,
-  onClick: PropTypes.func,
   alpha3Code: PropTypes.string,
 };
 
 CountryItem.defaultProps = {
   name: undefined,
   flag: undefined,
-  onClick: undefined,
   alpha3Code: undefined,
 };
 

@@ -16,23 +16,12 @@ const InfoTableRow = styled.tr`
   // flex-direction: row;
 `;
 
-const API_URL = 'https://restcountries.eu/rest/v2/all';
-
-function CountryInfo({ match }) {
+function CountryInfo({ countries, match }) {
   const {
     params: { alpha3Code },
   } = match;
-  const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState({});
   const [languages, setLanguages] = useState('');
-
-  async function gettingCountries() {
-    fetch(API_URL)
-      .then((res) => res.json())
-      .then((result) => {
-        setCountries(result);
-      });
-  }
 
   function findCountry() {
     setCountry(countries.find((item) => item.alpha3Code === alpha3Code));
@@ -51,15 +40,13 @@ function CountryInfo({ match }) {
   }
 
   useEffect(() => {
-    if (countries.length === 0) gettingCountries();
-    if (countries.length !== 0) findCountry();
-    if (Object.keys(country) !== 0) getLanguagesString();
+    // countries.subscribe(() => findCountry());
+    // if (countries && countries.length !== 0) findCountry();
+    // if (Object.keys(country) !== 0) getLanguagesString();
+    console.log(countries);
   });
 
   function renderCountryInfo() {
-    // const keys = () => Object.keys(country).map((key, value) => (
-    //   <div key={key}>{`${value + 1}: ${key}: ${country[key]}`}</div>
-    // ));
     return (
       <InfoTable>
         <thead>
@@ -255,10 +242,12 @@ function CountryInfo({ match }) {
 CountryInfo.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   match: PropTypes.any, // Временное решение
+  countries: PropTypes.arrayOf(PropTypes.any),
 };
 
 CountryInfo.defaultProps = {
   match: undefined,
+  countries: [],
 };
 
 export default CountryInfo;

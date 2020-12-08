@@ -1,8 +1,8 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import CountryItem from './CountryItem';
-
-const API_URL = 'https://restcountries.eu/rest/v2/all';
 
 const CountryListBlock = styled.ul`
   list-style-type: none;
@@ -11,31 +11,15 @@ const CountryListBlock = styled.ul`
   flex-wrap: wrap;
 `;
 
-function CountryList() {
-  const [countries, setCountries] = useState([]);
-
-  async function gettingCountries() {
-    fetch(API_URL)
-      .then((res) => res.json())
-      .then((result) => {
-        setCountries(result);
-      });
-  }
-
-  useEffect(() => {
-    if (countries.length === 0) gettingCountries();
-  });
-
-  function onCountryClick() {
-  }
-
+function CountryList({
+  countries,
+}) {
   function renderCountries() {
     return countries.map((item) => (
       <CountryItem
         name={item.name}
         key={item.name}
         flag={item.flag}
-        onClick={onCountryClick(item)}
         alpha3Code={item.alpha3Code}
       />
     ));
@@ -47,5 +31,13 @@ function CountryList() {
     </CountryListBlock>
   );
 }
+
+CountryList.propTypes = {
+  countries: PropTypes.arrayOf(PropTypes.any),
+};
+
+CountryList.defaultProps = {
+  countries: [],
+};
 
 export default CountryList;

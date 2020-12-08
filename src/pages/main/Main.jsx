@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  Switch,
+  Route,
+} from 'react-router';
+import CountryInfo from './components/CountryInfo';
 import CountryList from './components/CountryList';
 
+const API_URL = 'https://restcountries.eu/rest/v2/all';
+
 function Main() {
+  const [countries, setCountries] = useState([]);
+
+  async function gettingCountries() {
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((result) => {
+        setCountries(result);
+      });
+  }
+
+  useEffect(() => {
+    if (countries.length === 0) gettingCountries();
+  });
+
   return (
-    <CountryList />
+    <Switch>
+      <Route exact path="/" render={() => <CountryList countries={countries} />} />
+      <Route path="/country/:alpha3Code" render={() => <CountryInfo countries={countries} />} />
+    </Switch>
   );
 }
 

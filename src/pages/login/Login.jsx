@@ -57,7 +57,7 @@ function Login() {
   }
 
   function redirectToMain() {
-    const path = 'main';
+    const path = '/';
     history.push(path);
   }
 
