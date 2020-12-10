@@ -12,10 +12,13 @@ const InputWrapper = styled.div`
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 1em;
+    font-family: 'Montserrat', sans-serif;
   }
   label {
+    color: #656565;
     width: min-content;
     padding-left: 5px;
+    padding-bottom: 2px;
   }
 `;
 

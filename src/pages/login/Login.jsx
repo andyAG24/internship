@@ -4,11 +4,17 @@ import styled from 'styled-components';
 import { Input, Button, Layout } from 'components';
 
 const LoginFormWrapper = styled.div`
+  border: 1px solid #ccc; 
   border-radius: 20px;
-  box-shadow: 0px 2px 20px 0px black;
+  box-shadow: 0px 1px 5px 0px black;
   margin: 40px auto 0 auto;
-  max-width: 400px;
-  min-width: 200px;
+  width: 50vw;
+  max-width: 500px;
+  min-width: 250px;
+  @media screen and (max-width: 425px) {
+    width: 100vw;
+    max-width: none;
+  }
 `;
 
 const InfoMessage = styled.div`

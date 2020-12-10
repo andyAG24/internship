@@ -14,6 +14,9 @@ const InfoTableRow = styled.tr`
   // border-top: 1px solid #a2a9b1;
   // display: flex;
   // flex-direction: row;
+  th {
+    text-align: left;
+  }
 `;
 
 function CountryInfo({ countries, match }) {

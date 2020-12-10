@@ -7,6 +7,7 @@ const ButtonWrapper = styled.button`
   padding: 10px;
   margin-top: 10px;
   font-size: 1em;
+  font-family: 'Montserrat', sans-serif;
   background: none;
   border: 1px solid #ccc;
   border-radius: 5px;
