@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
-import { Input, Button } from 'components';
+import { Input, Button, Layout } from 'components';
 
 const LoginFormWrapper = styled.div`
   border-radius: 20px;
@@ -67,15 +67,17 @@ function Login() {
   }
 
   return (
-    <LoginFormWrapper>
-      <LoginForm>
-        <Input label="Login" name="login" onChange={handleLoginChange} />
-        <Input label="Password" name="password" type="password" onChange={handlePasswordChange} />
-        { infoMessage
-          && <InfoMessage>{infoMessage}</InfoMessage>}
-        <Button onClick={signIn} disabled={!!infoMessage} title="Sign in" />
-      </LoginForm>
-    </LoginFormWrapper>
+    <Layout>
+      <LoginFormWrapper>
+        <LoginForm>
+          <Input label="Login" name="login" onChange={handleLoginChange} />
+          <Input label="Password" name="password" type="password" onChange={handlePasswordChange} />
+          { infoMessage
+            && <InfoMessage>{infoMessage}</InfoMessage>}
+          <Button onClick={signIn} disabled={!!infoMessage} title="Sign in" />
+        </LoginForm>
+      </LoginFormWrapper>
+    </Layout>
   );
 }
 

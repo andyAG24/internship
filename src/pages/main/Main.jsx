@@ -3,6 +3,7 @@ import {
   Switch,
   Route,
 } from 'react-router';
+import { Layout } from 'components';
 import CountryInfo from './components/CountryInfo';
 import CountryList from './components/CountryList';
 
@@ -24,11 +25,12 @@ function Main() {
   });
 
   return (
-    <Switch>
-      <Route exact path="/" render={() => <CountryList countries={countries} />} />
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <Route path="/country/:alpha3Code" render={({ match }) => <CountryInfo countries={countries} match={match} />} />
-    </Switch>
+    <Layout>
+      <Switch>
+        <Route exact path="/" render={() => <CountryList countries={countries} />} />
+        <Route path="/country/:alpha3Code" render={({ match }) => <CountryInfo countries={countries} match={match} />} />
+      </Switch>
+    </Layout>
   );
 }
 
