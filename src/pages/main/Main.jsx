@@ -4,8 +4,7 @@ import {
   Route,
 } from 'react-router';
 import { Layout } from 'components';
-import CountryInfo from './components/CountryInfo';
-import CountryList from './components/CountryList';
+import { CountryInfo, CountryList } from './components';
 
 const API_URL = 'https://restcountries.eu/rest/v2/all';
 

@@ -1,22 +1,35 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Layout } from 'components';
 
 const InfoTable = styled.table`
   border: 1px solid #a2a9b1;
   max-width: 50vw;
-  margin: auto;
+`;
+
+const InfoTableHead = styled.thead`
+  td {
+    padding-bottom: 15px;
+  }
+  h1 {
+    margin-bottom: unset;
+  }
 `;
 
 const InfoTableRow = styled.tr`
-  // border-top: 1px solid #a2a9b1;
-  // display: flex;
-  // flex-direction: row;
   th {
     text-align: left;
   }
+  > * {
+    padding: 10px;
+  }
+`;
+
+const LayoutWrapper = styled.div`
+
 `;
 
 function CountryInfo({ countries, match }) {
@@ -45,196 +58,53 @@ function CountryInfo({ countries, match }) {
     if (country && Object.keys(country) !== 0) getLanguagesString();
   });
 
+  function generateRows(obj) {
+    const fields = Object.keys(obj);
+    const kek = fields.map((item) => {
+      let element;
+      if (typeof (obj[item]) !== 'object') {
+        element = (
+          <InfoTableRow key={item}>
+            <th scope="row">
+              <span>{item}</span>
+            </th>
+            <td>
+              <span>
+                {obj[item] || 'Loading...'}
+              </span>
+            </td>
+          </InfoTableRow>
+        );
+      }
+      if ((typeof (obj[item]) !== 'string') && (typeof (obj[item]) !== 'number')) element = generateRows(obj[item]);
+      return element;
+    });
+    return kek;
+  }
+
   function renderCountryInfo() {
     return (
       <InfoTable>
-        <thead>
+        <InfoTableHead>
           <tr>
             <td colSpan="2">
               <h1>{country.name}</h1>
               <span>{country.nativeName}</span>
             </td>
           </tr>
-        </thead>
+        </InfoTableHead>
         <tbody>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Capital</span>
-            </th>
-            <td>
-              <span>{`${country.capital} (latlng: ${country.latlng})`}</span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Languages</span>
-            </th>
-            <td>
-              <span>
-                {languages || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Alternative Spellings</span>
-            </th>
-            <td>
-              <span>
-                {`${country.altSpellings}` || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Demonym</span>
-            </th>
-            <td>
-              <span>
-                {country.demonym || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Region</span>
-            </th>
-            <td>
-              <span>
-                {country.region || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Subregion</span>
-            </th>
-            <td>
-              <span>
-                {country.subregion || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Borders</span>
-            </th>
-            <td>
-              <span>
-                {`${country.borders}` || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Area</span>
-            </th>
-            <td>
-              <span>
-                {`${country.area} km2` || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Population</span>
-            </th>
-            <td>
-              <span>
-                {country.population || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Gini</span>
-            </th>
-            <td>
-              <span>
-                {country.gini || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Currencies</span>
-            </th>
-            <td>
-              <span>
-                Loading...
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Timezone</span>
-            </th>
-            <td>
-              <span>
-                {`${country.timezones}` || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Calling Codes</span>
-            </th>
-            <td>
-              <span>
-                {`+${country.callingCodes}` || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>ISO 3166 Code</span>
-            </th>
-            <td>
-              <span>
-                {country.alpha2Code || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Alpha3Code</span>
-            </th>
-            <td>
-              <span>
-                {country.alpha3Code || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Internet TLD</span>
-            </th>
-            <td>
-              <span>
-                {`${country.topLevelDomain}` || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
-          <InfoTableRow>
-            <th scope="row">
-              <span>Numeric Code</span>
-            </th>
-            <td>
-              <span>
-                {country.numericCode || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
+          { Object.keys(country).length !== 0 && generateRows(country) }
         </tbody>
       </InfoTable>
     );
   }
 
   return (
-    <>
+    <LayoutWrapper>
       <Link to="/">Назад</Link>
       { country && renderCountryInfo() }
-    </>
+    </LayoutWrapper>
   );
 }
 
