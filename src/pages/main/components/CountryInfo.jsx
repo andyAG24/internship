@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes, { object } from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { FavoriteCountriesConsumer } from '../Main';
 
 const InfoTable = styled.table`
   border: 1px solid #a2a9b1;
@@ -32,12 +33,16 @@ const LayoutWrapper = styled.div`
 
 `;
 
+const StarIcon = styled.img`
+
+`;
+
 function CountryInfo({ countries, match }) {
   const { alpha3Code } = match.params;
   const [country, setCountry] = useState({});
 
   function findCountry() {
-    setCountry(countries.find((item) => item.alpha3Code === alpha3Code));
+    setCountry(countries[alpha3Code]);
   }
 
   function getListString(obj) {
@@ -58,7 +63,7 @@ function CountryInfo({ countries, match }) {
     obj.forEach((elem) => {
       Object.keys(elem).forEach((key) => {
         const element = (elem[key] && elem[key].length !== 0) ? (
-          <div>
+          <div key={key + elem[key]}>
             <span>{`${key}: `}</span>
             <span>{elem[key]}</span>
           </div>
@@ -128,8 +133,21 @@ function CountryInfo({ countries, match }) {
         <InfoTableHead>
           <tr>
             <td colSpan="2">
-              <h1>{country.name}</h1>
-              <span>{country.nativeName}</span>
+              {/* <StarIcon src="https://image.flaticon.com/icons/png/512/130/130188.png" alt="Add to favorites" /> */}
+              <FavoriteCountriesConsumer>
+                {({ favCountries, addCountry }) => (
+                  <button
+                    type="submit"
+                    onClick={addCountry}
+                  >
+                    Add to favorites
+                  </button>
+                )}
+              </FavoriteCountriesConsumer>
+              <div>
+                <h1>{country.name}</h1>
+                <span>{country.nativeName}</span>
+              </div>
             </td>
           </tr>
         </InfoTableHead>
@@ -141,7 +159,7 @@ function CountryInfo({ countries, match }) {
   }
 
   return (
-    <LayoutWrapper>
+    <LayoutWrapper key="layout-wrapper">
       <Link to="/">Назад</Link>
       { country && renderCountryInfo() }
     </LayoutWrapper>
@@ -151,12 +169,12 @@ function CountryInfo({ countries, match }) {
 CountryInfo.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   match: PropTypes.any, // Временное решение
-  countries: PropTypes.arrayOf(PropTypes.any),
+  countries: PropTypes.objectOf(PropTypes.object),
 };
 
 CountryInfo.defaultProps = {
   match: undefined,
-  countries: [],
+  countries: {},
 };
 
 export default CountryInfo;

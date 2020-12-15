@@ -15,29 +15,29 @@ function CountryList({
   countries,
 }) {
   function renderCountries() {
-    return countries.map((item) => (
+    return Object.keys(countries).map((item) => (
       <CountryItem
-        name={item.name}
-        key={item.name}
-        flag={item.flag}
-        alpha3Code={item.alpha3Code}
+        name={countries[item].name}
+        key={countries[item].name}
+        flag={countries[item].flag}
+        alpha3Code={countries[item].alpha3Code}
       />
     ));
   }
 
   return (
     <CountryListBlock>
-      { countries && renderCountries() }
+      { Object.keys(countries).length !== 0 && renderCountries() }
     </CountryListBlock>
   );
 }
 
 CountryList.propTypes = {
-  countries: PropTypes.arrayOf(PropTypes.any),
+  countries: PropTypes.objectOf(PropTypes.object),
 };
 
 CountryList.defaultProps = {
-  countries: [],
+  countries: {},
 };
 
 export default CountryList;
