@@ -23,7 +23,11 @@ const InputWrapper = styled.div`
 `;
 
 function Input({
-  label, placeholder, value, type, onChange,
+  label = undefined,
+  placeholder = undefined,
+  value = undefined,
+  type = undefined,
+  onChange = undefined,
 }) {
   return (
     <InputWrapper>
@@ -45,14 +49,6 @@ Input.propTypes = {
   value: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
-};
-
-Input.defaultProps = {
-  label: null,
-  placeholder: null,
-  value: undefined,
-  type: null,
-  onChange: null,
 };
 
 export default Input;

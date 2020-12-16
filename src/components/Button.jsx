@@ -21,7 +21,11 @@ const ButtonWrapper = styled.button`
   }
 `;
 
-function Button({ disabled, onClick, title }) {
+function Button({
+  disabled = false,
+  onClick = null,
+  title = 'Click',
+}) {
   return (
     <ButtonWrapper disabled={disabled} onClick={onClick}>{title}</ButtonWrapper>
   );
@@ -31,12 +35,6 @@ Button.propTypes = {
   title: PropTypes.string,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
-};
-
-Button.defaultProps = {
-  title: 'Click',
-  onClick: null,
-  disabled: false,
 };
 
 export default Button;

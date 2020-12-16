@@ -25,9 +25,9 @@ const CountryName = styled.span`
 `;
 
 function CountryItem({
-  name,
-  flag,
-  alpha3Code,
+  name = undefined,
+  flag = undefined,
+  alpha3Code = undefined,
 }) {
   return (
     <CountryItemWrapper key={name}>
@@ -40,15 +40,9 @@ function CountryItem({
 }
 
 CountryItem.propTypes = {
-  name: PropTypes.string,
-  flag: PropTypes.string,
-  alpha3Code: PropTypes.string,
-};
-
-CountryItem.defaultProps = {
-  name: undefined,
-  flag: undefined,
-  alpha3Code: undefined,
+  name: PropTypes.string.isRequired,
+  flag: PropTypes.string.isRequired,
+  alpha3Code: PropTypes.string.isRequired,
 };
 
 export default CountryItem;

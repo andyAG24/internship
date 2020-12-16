@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import CountryItem from './CountryItem';
+import Countries from './Countries';
 
 const CountryListBlock = styled.ul`
   list-style-type: none;
@@ -12,32 +12,17 @@ const CountryListBlock = styled.ul`
 `;
 
 function CountryList({
-  countries,
+  countries = {},
 }) {
-  function renderCountries() {
-    return Object.keys(countries).map((item) => (
-      <CountryItem
-        name={countries[item].name}
-        key={countries[item].name}
-        flag={countries[item].flag}
-        alpha3Code={countries[item].alpha3Code}
-      />
-    ));
-  }
-
   return (
     <CountryListBlock>
-      { Object.keys(countries).length !== 0 && renderCountries() }
+      <Countries countries={countries} />
     </CountryListBlock>
   );
 }
 
 CountryList.propTypes = {
-  countries: PropTypes.objectOf(PropTypes.object),
-};
-
-CountryList.defaultProps = {
-  countries: {},
+  countries: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default CountryList;

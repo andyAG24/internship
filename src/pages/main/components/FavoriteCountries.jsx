@@ -1,18 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
-import { FavoriteCountriesContext, FavoriteCountriesConsumer } from '../Main';
-
-// const state = useContext(FavoriteCountriesContext);
-
-function addToFavorite(context) {
-  console.log(context);
-}
+import { FavoriteCountriesContext } from '../Main';
 
 function FavoriteCountries() {
+  const context = useContext(FavoriteCountriesContext);
+
   return (
-    <FavoriteCountriesConsumer>
-      {(context) => addToFavorite(context)}
-    </FavoriteCountriesConsumer>
+    <button type="submit" onClick={() => console.log(context)}>click</button>
   );
 }
 

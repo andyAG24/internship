@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes, { object } from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FavoriteCountriesConsumer } from '../Main';
+import { FavoriteCountriesContext } from '../Main';
+import InfoTableRow from './InfoTableRow';
+
+const utils = require('utils/Utils');
 
 const InfoTable = styled.table`
   border: 1px solid #a2a9b1;
@@ -20,7 +23,7 @@ const InfoTableHead = styled.thead`
   }
 `;
 
-const InfoTableRow = styled.tr`
+const InfoTableRow1 = styled.tr`
   th {
     text-align: left;
   }
@@ -37,21 +40,14 @@ const StarIcon = styled.img`
 
 `;
 
-function CountryInfo({ countries, match }) {
+function CountryInfo({ countries = {}, match = undefined }) {
   const { alpha3Code } = match.params;
   const [country, setCountry] = useState({});
 
+  const context = useContext(FavoriteCountriesContext);
+
   function findCountry() {
     setCountry(countries[alpha3Code]);
-  }
-
-  function getListString(obj) {
-    let output = '';
-    obj.forEach((item) => {
-      output += item;
-      if (obj.indexOf(item) !== obj.length - 1) output += ', ';
-    });
-    return (output);
   }
 
   useEffect(() => {
@@ -79,46 +75,32 @@ function CountryInfo({ countries, match }) {
 
   function generateRows(obj) {
     const fields = Object.keys(obj);
-    const elements = fields.map((item) => {
+    const elements = fields.map((itemName) => {
       let element;
-      if (typeof (obj[item]) !== 'object') {
+      if (typeof (obj[itemName]) !== 'object') {
         element = (
-          <InfoTableRow key={item}>
-            <th scope="row">
-              <span>{item}</span>
-            </th>
-            <td>
-              <span>
-                {obj[item] || 'Loading...'}
-              </span>
-            </td>
-          </InfoTableRow>
+          <InfoTableRow
+            obj={obj}
+            itemName={itemName}
+          />
         );
       }
-      if (Array.isArray(obj[item])) {
-        if ((typeof (obj[item][0]) === 'string') || (typeof (obj[item][0]) === 'number')) {
+      if (Array.isArray(obj[itemName])) {
+        if ((typeof (obj[itemName][0]) === 'string') || (typeof (obj[itemName][0]) === 'number')) {
           element = (
-            <InfoTableRow key={item}>
-              <th scope="row">
-                <span>{item}</span>
-              </th>
-              <td>
-                <span>
-                  {getListString(obj[item]) || 'Loading...'}
-                </span>
-              </td>
-            </InfoTableRow>
+            <InfoTableRow
+              obj={obj}
+              itemName={itemName}
+              customValue={utils.getListString(obj[itemName])}
+            />
           );
         } else {
           element = (
-            <InfoTableRow key={item}>
-              <th scope="row">
-                <span>{item}</span>
-              </th>
-              <td>
-                { (obj[item] && generateChildRows(obj[item])) || 'Loading...' }
-              </td>
-            </InfoTableRow>
+            <InfoTableRow
+              obj={obj}
+              itemName={itemName}
+              customValue={(obj[itemName] && generateChildRows(obj[itemName]))}
+            />
           );
         }
       }
@@ -133,17 +115,16 @@ function CountryInfo({ countries, match }) {
         <InfoTableHead>
           <tr>
             <td colSpan="2">
-              {/* <StarIcon src="https://image.flaticon.com/icons/png/512/130/130188.png" alt="Add to favorites" /> */}
-              <FavoriteCountriesConsumer>
-                {({ favCountries, addCountry }) => (
-                  <button
-                    type="submit"
-                    onClick={addCountry}
-                  >
-                    Add to favorites
-                  </button>
-                )}
-              </FavoriteCountriesConsumer>
+              <button
+                type="submit"
+                onClick={() => {
+                  country.isFavorite = true;
+                  context.setFavorites(country);
+                  console.log(country, context.favorites);
+                }}
+              >
+                Add to favorites
+              </button>
               <div>
                 <h1>{country.name}</h1>
                 <span>{country.nativeName}</span>
@@ -170,11 +151,6 @@ CountryInfo.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   match: PropTypes.any, // Временное решение
   countries: PropTypes.objectOf(PropTypes.object),
-};
-
-CountryInfo.defaultProps = {
-  match: undefined,
-  countries: {},
 };
 
 export default CountryInfo;
