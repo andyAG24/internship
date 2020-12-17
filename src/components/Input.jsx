@@ -23,11 +23,11 @@ const InputWrapper = styled.div`
 `;
 
 function Input({
-  label = undefined,
-  placeholder = undefined,
-  value = undefined,
-  type = undefined,
-  onChange = undefined,
+  label,
+  placeholder,
+  value,
+  type,
+  onChange,
 }) {
   return (
     <InputWrapper>
