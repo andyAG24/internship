@@ -26,9 +26,9 @@ export const FavoriteCountriesConsumer = FavoriteCountriesContext.Consumer;
 
 const contextValue = {
   favorites: {},
-  setFavorites: (country) => {
-    const id = country.alpha3Code;
-    contextValue.favorites[id] = country;
+  setFavorites: (countryId) => {
+    contextValue.favorites[countryId] = true;
+    console.log(contextValue);
   },
   removeFavorites: (country) => {
     const id = country.alpha3Code;
@@ -43,12 +43,14 @@ function Main() {
     fetch(API_URL)
       .then((res) => res.json())
       .then((result) => {
-        setCountries(utils.normalizeDataByField(result, 'alpha3Code'));
+        setCountries(utils.normalizeCountriesByField(result, 'alpha3Code'));
       });
   }
 
   useEffect(() => {
-    if (Object.keys(countries).length === 0) gettingCountries();
+    if (Object.keys(countries).length === 0) {
+      gettingCountries();
+    }
   });
 
   return (

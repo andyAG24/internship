@@ -12,7 +12,7 @@ const CountryListBlock = styled.ul`
 `;
 
 function CountryList({
-  countries = {},
+  countries,
 }) {
   return (
     <CountryListBlock>

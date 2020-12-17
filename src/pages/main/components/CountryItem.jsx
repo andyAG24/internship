@@ -25,9 +25,9 @@ const CountryName = styled.span`
 `;
 
 function CountryItem({
-  name = undefined,
-  flag = undefined,
-  alpha3Code = undefined,
+  name,
+  flag,
+  alpha3Code,
 }) {
   return (
     <CountryItemWrapper key={name}>

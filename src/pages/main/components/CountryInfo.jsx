@@ -51,27 +51,10 @@ function CountryInfo({ countries = {}, match = undefined }) {
   }
 
   useEffect(() => {
-    if (countries && countries.length !== 0) findCountry();
+    if (countries && countries.length !== 0) {
+      findCountry();
+    }
   });
-
-  function generateChildRows(obj) {
-    const elements = [];
-    obj.forEach((elem) => {
-      Object.keys(elem).forEach((key) => {
-        const element = (elem[key] && elem[key].length !== 0) ? (
-          <div key={key + elem[key]}>
-            <span>{`${key}: `}</span>
-            <span>{elem[key]}</span>
-          </div>
-        ) : (
-          <>
-          </>
-        );
-        elements.push(element);
-      });
-    });
-    return elements;
-  }
 
   function generateRows(obj) {
     const fields = Object.keys(obj);
@@ -94,14 +77,6 @@ function CountryInfo({ countries = {}, match = undefined }) {
               customValue={utils.getListString(obj[itemName])}
             />
           );
-        } else {
-          element = (
-            <InfoTableRow
-              obj={obj}
-              itemName={itemName}
-              customValue={(obj[itemName] && generateChildRows(obj[itemName]))}
-            />
-          );
         }
       }
       return element;
@@ -118,9 +93,7 @@ function CountryInfo({ countries = {}, match = undefined }) {
               <button
                 type="submit"
                 onClick={() => {
-                  country.isFavorite = true;
-                  context.setFavorites(country);
-                  console.log(country, context.favorites);
+                  context.setFavorites(country.alpha3Code);
                 }}
               >
                 Add to favorites

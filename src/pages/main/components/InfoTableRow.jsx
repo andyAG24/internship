@@ -17,8 +17,6 @@ function InfoTableRow({
   itemName,
   customValue,
 }) {
-  console.log(customValue, typeof (customValue));
-
   return (
     <InfoTableRowStyled key={itemName}>
       <th scope="row">

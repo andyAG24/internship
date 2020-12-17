@@ -69,7 +69,9 @@ function Login() {
 
   function signIn() {
     setInfoMessage('');
-    if (isValidCredentials()) redirectToMain();
+    if (isValidCredentials()) {
+      redirectToMain();
+    }
   }
 
   return (
