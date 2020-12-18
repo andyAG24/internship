@@ -43,6 +43,7 @@ const StarIcon = styled.img`
 function CountryInfo({ countries = {}, match = undefined }) {
   const { alpha3Code } = match.params;
   const [country, setCountry] = useState({});
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const context = useContext(FavoriteCountriesContext);
 
@@ -53,6 +54,9 @@ function CountryInfo({ countries = {}, match = undefined }) {
   useEffect(() => {
     if (countries && countries.length !== 0) {
       findCountry();
+    }
+    if (country && context.favorites.has(country.alpha3Code)) {
+      setIsFavorite(true);
     }
   });
 
@@ -90,14 +94,28 @@ function CountryInfo({ countries = {}, match = undefined }) {
         <InfoTableHead>
           <tr>
             <td colSpan="2">
-              <button
-                type="submit"
-                onClick={() => {
-                  context.setFavorites(country.alpha3Code);
-                }}
-              >
-                Add to favorites
-              </button>
+              {!isFavorite
+                ? (
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      context.setFavorites(country.alpha3Code);
+                      setIsFavorite(true);
+                    }}
+                  >
+                    Add to favorites
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      context.removeFavorites(country.alpha3Code);
+                      setIsFavorite(false);
+                    }}
+                  >
+                    Remove from favorites
+                  </button>
+                )}
               <div>
                 <h1>{country.name}</h1>
                 <span>{country.nativeName}</span>

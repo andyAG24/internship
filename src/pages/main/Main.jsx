@@ -17,7 +17,7 @@ const LayoutInherited = styled(Layout)`
 `;
 
 export const FavoriteCountriesContext = React.createContext({
-  favorites: {},
+  favorites: new Set(),
   setFavorites: () => {},
   removeFavorites: () => {},
 });
@@ -25,14 +25,12 @@ export const FavoriteCountriesProvider = FavoriteCountriesContext.Provider;
 export const FavoriteCountriesConsumer = FavoriteCountriesContext.Consumer;
 
 const contextValue = {
-  favorites: {},
+  favorites: new Set(),
   setFavorites: (countryId) => {
-    contextValue.favorites[countryId] = true;
-    console.log(contextValue);
+    contextValue.favorites.add(countryId);
   },
-  removeFavorites: (country) => {
-    const id = country.alpha3Code;
-    delete contextValue.favorites[id];
+  removeFavorites: (countryId) => {
+    contextValue.favorites.delete(countryId);
   },
 };
 
@@ -63,7 +61,7 @@ function Main() {
         <FavoriteCountriesProvider value={contextValue}>
           <Route exact path="/" render={() => <CountryList countries={countries} />} />
           <Route path="/country/:alpha3Code" render={({ match }) => <CountryInfo countries={countries} match={match} />} />
-          <Route path="/favorites" component={FavoriteCountries} />
+          <Route path="/favorites" render={() => <FavoriteCountries countries={countries} />} />
         </FavoriteCountriesProvider>
       </Switch>
     </LayoutInherited>
