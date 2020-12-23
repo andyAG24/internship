@@ -16,6 +16,16 @@ const LayoutInherited = styled(Layout)`
   flex-direction: column;
 `;
 
+const PageNavi = styled.nav`
+  flex-direction: column;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  a {
+    text-decoration: none;
+    margin: 10px;
+  }
+`;
+
 export const FavoriteCountriesContext = React.createContext({
   favorites: new Set(),
   setFavorites: () => {},
@@ -53,10 +63,10 @@ function Main() {
 
   return (
     <LayoutInherited>
-      <nav>
+      <PageNavi>
         <Link to="/">Список стран</Link>
         <Link to="/favorites">Избранное</Link>
-      </nav>
+      </PageNavi>
       <Switch>
         <FavoriteCountriesProvider value={contextValue}>
           <Route exact path="/" render={() => <CountryList countries={countries} />} />

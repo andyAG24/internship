@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -32,6 +31,7 @@ function Input({
   return (
     <InputWrapper>
       { label
+        // eslint-disable-next-line jsx-a11y/label-has-associated-control
         && <label>{label}</label>}
       <input
         placeholder={placeholder}

@@ -3,15 +3,18 @@ import React, { useEffect, useState, useContext } from 'react';
 import PropTypes, { object } from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Button } from 'components';
 import { FavoriteCountriesContext } from '../Main';
 import InfoTableRow from './InfoTableRow';
 
 const utils = require('utils/Utils');
 
 const InfoTable = styled.table`
-  border: 1px solid #a2a9b1;
+  border-radius: 20px;
+  border: 1px solid #ccc;
   max-width: 50vw;
   margin: auto;
+  box-shadow: 0px 1px 5px 0px black;
 `;
 
 const InfoTableHead = styled.thead`
@@ -23,22 +26,23 @@ const InfoTableHead = styled.thead`
   }
 `;
 
-const InfoTableRow1 = styled.tr`
-  th {
-    text-align: left;
-  }
-  > * {
-    padding: 10px;
-  }
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
-const LayoutWrapper = styled.div`
-
+const CountryFlag = styled.img`
+  flex-grow: 1;
+  width: 70px;
+  margin-left: 20px;
+  margin-top: 20px;
 `;
 
-const StarIcon = styled.img`
-
+const CountryName = styled.div`
+  flex-grow: 10;
 `;
+
+const LayoutWrapper = styled.div``;
 
 function CountryInfo({ countries = {}, match = undefined }) {
   const { alpha3Code } = match.params;
@@ -88,38 +92,41 @@ function CountryInfo({ countries = {}, match = undefined }) {
     return elements;
   }
 
+  function renderAddToFavButton() {
+    return !isFavorite
+      ? (
+        <Button
+          title="Добавить в избранное"
+          onClick={() => {
+            context.setFavorites(country.alpha3Code);
+            setIsFavorite(true);
+          }}
+        />
+      ) : (
+        <Button
+          title="Убрать из избранного"
+          onClick={() => {
+            context.removeFavorites(country.alpha3Code);
+            setIsFavorite(false);
+          }}
+        />
+      );
+  }
+
   function renderCountryInfo() {
     return (
       <InfoTable>
         <InfoTableHead>
           <tr>
             <td colSpan="2">
-              {!isFavorite
-                ? (
-                  <button
-                    type="submit"
-                    onClick={() => {
-                      context.setFavorites(country.alpha3Code);
-                      setIsFavorite(true);
-                    }}
-                  >
-                    Add to favorites
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    onClick={() => {
-                      context.removeFavorites(country.alpha3Code);
-                      setIsFavorite(false);
-                    }}
-                  >
-                    Remove from favorites
-                  </button>
-                )}
-              <div>
-                <h1>{country.name}</h1>
-                <span>{country.nativeName}</span>
-              </div>
+              <TitleWrapper>
+                <CountryFlag src={country.flag} alt="Flag" />
+                <CountryName>
+                  <h1>{country.name}</h1>
+                  <span>{country.nativeName}</span>
+                </CountryName>
+              </TitleWrapper>
+              { renderAddToFavButton() }
             </td>
           </tr>
         </InfoTableHead>
@@ -132,7 +139,6 @@ function CountryInfo({ countries = {}, match = undefined }) {
 
   return (
     <LayoutWrapper key="layout-wrapper">
-      <Link to="/">Назад</Link>
       { country && renderCountryInfo() }
     </LayoutWrapper>
   );
