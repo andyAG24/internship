@@ -23,7 +23,7 @@ const ButtonWrapper = styled.button`
 
 function Button({
   disabled = false,
-  onClick = null,
+  onClick = undefined,
   title = 'Click',
 }) {
   return (
