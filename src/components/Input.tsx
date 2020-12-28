@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 const InputWrapper = styled.div`
   display: flex;
@@ -22,13 +21,21 @@ const InputWrapper = styled.div`
   }
 `;
 
+type InputProps = {
+  label?: string,
+  placeholder?: string,
+  value?: string,
+  type?: string,
+  onChange?: (ev: ChangeEvent<HTMLInputElement>) => void,
+};
+
 function Input({
   label,
   placeholder,
   value,
   type,
   onChange,
-}) {
+}: InputProps) {
   return (
     <InputWrapper>
       { label
@@ -36,19 +43,12 @@ function Input({
       <input
         placeholder={placeholder}
         value={value}
-        type={type}
         onChange={onChange}
+        type={type}
       />
     </InputWrapper>
+    // <div>kek</div>
   );
 }
-
-Input.propTypes = {
-  label: PropTypes.string,
-  placeholder: PropTypes.string,
-  value: PropTypes.string,
-  type: PropTypes.string,
-  onChange: PropTypes.func,
-};
 
 export default Input;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
-import { Input, Button, Layout } from 'components';
+import { Input, Layout } from 'components';
 
 const LoginFormWrapper = styled.div`
   border: 1px solid #ccc; 
@@ -40,12 +40,12 @@ function Login() {
 
   const history = useHistory();
 
-  function handleLoginChange(ev) {
+  function handleLoginChange(ev: React.ChangeEvent<HTMLInputElement>) {
     setLogin(ev.target.value);
     setInfoMessage('');
   }
 
-  function handlePasswordChange(ev) {
+  function handlePasswordChange(ev: React.ChangeEvent<HTMLInputElement>) {
     setPassword(ev.target.value);
     setInfoMessage('');
   }
@@ -78,11 +78,14 @@ function Login() {
     <Layout>
       <LoginFormWrapper>
         <LoginForm>
-          <Input label="Login" name="login" onChange={handleLoginChange} />
-          <Input label="Password" name="password" type="password" onChange={handlePasswordChange} />
+          <Input label="Login" onChange={handleLoginChange} />
+          <Input label="Password" type="password" onChange={handlePasswordChange} />
           { infoMessage
             && <InfoMessage>{infoMessage}</InfoMessage>}
-          <Button onClick={signIn} disabled={!!infoMessage} title="Sign in" />
+          {/* <Button onClick={signIn} disabled={!!infoMessage} title="Sign in" /> */}
+
+          {/* Временный костыль */}
+          <button type="button" onClick={signIn}>kek</button>
         </LoginForm>
       </LoginFormWrapper>
     </Layout>

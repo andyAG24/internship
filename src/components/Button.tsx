@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 const ButtonWrapper = styled.button`
   width: 100%;  
@@ -21,20 +20,14 @@ const ButtonWrapper = styled.button`
   }
 `;
 
-function Button({
-  disabled = false,
-  onClick = undefined,
-  title = 'Click',
-}) {
+function Button(
+  disabled: boolean = false,
+  onClick: () => {},
+  title: string = 'Click',
+) {
   return (
     <ButtonWrapper disabled={disabled} onClick={onClick}>{title}</ButtonWrapper>
   );
 }
-
-Button.propTypes = {
-  title: PropTypes.string,
-  onClick: PropTypes.func,
-  disabled: PropTypes.bool,
-};
 
 export default Button;
