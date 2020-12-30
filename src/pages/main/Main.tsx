@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Layout } from 'components';
 import { CountryInfo, CountryList, FavoriteCountries } from './components';
+import { ICountryFilteredObj } from './components/ICountryFilteredObj';
 
 const utils = require('utils/Utils');
 
@@ -16,21 +17,25 @@ const LayoutInherited = styled(Layout)`
   flex-direction: column;
 `;
 
-export const FavoriteCountriesContext = React.createContext({
-  favorites: {},
-  setFavorites: () => {},
-  removeFavorites: () => {},
-});
+interface IFavorites {
+  [key: string]: any
+}
+
+interface IFavoriteCountriesContext {
+  favorites: IFavorites,
+  setFavorites: (countryId: string) => void,
+  removeFavorites: (country: ICountryFilteredObj) => void,
+}
+export const FavoriteCountriesContext = React.createContext<IFavoriteCountriesContext>();
 export const FavoriteCountriesProvider = FavoriteCountriesContext.Provider;
 export const FavoriteCountriesConsumer = FavoriteCountriesContext.Consumer;
 
-const contextValue = {
+const contextValue: IFavoriteCountriesContext = {
   favorites: {},
-  setFavorites: (countryId) => {
+  setFavorites: (countryId: string) => {
     contextValue.favorites[countryId] = true;
-    console.log(contextValue);
   },
-  removeFavorites: (country) => {
+  removeFavorites: (country: ICountryFilteredObj) => {
     const id = country.alpha3Code;
     delete contextValue.favorites[id];
   },

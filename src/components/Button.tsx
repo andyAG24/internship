@@ -20,11 +20,17 @@ const ButtonWrapper = styled.button`
   }
 `;
 
-function Button(
-  disabled: boolean = false,
-  onClick: () => {},
-  title: string = 'Click',
-) {
+type ButtonProps = {
+  disabled: boolean,
+  onClick: (ev: React.MouseEvent) => void,
+  title: string
+};
+
+function Button({
+  disabled,
+  onClick,
+  title,
+}: ButtonProps) {
   return (
     <ButtonWrapper disabled={disabled} onClick={onClick}>{title}</ButtonWrapper>
   );

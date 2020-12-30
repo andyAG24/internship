@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FavoriteCountriesContext } from '../Main';
 import InfoTableRow from './InfoTableRow';
+import { ICountryFilteredObj } from './ICountryFilteredObj';
 
 const utils = require('utils/Utils');
 
@@ -40,9 +41,14 @@ const StarIcon = styled.img`
 
 `;
 
-function CountryInfo({ countries = {}, match = undefined }) {
+type CountryInfoTypes = {
+  countries: {[index: string]: ICountryFilteredObj},
+  match: any
+}
+
+function CountryInfo({ countries, match }: CountryInfoTypes) {
   const { alpha3Code } = match.params;
-  const [country, setCountry] = useState({});
+  const [country, setCountry] = useState<ICountryFilteredObj>();
 
   const context = useContext(FavoriteCountriesContext);
 
@@ -51,33 +57,32 @@ function CountryInfo({ countries = {}, match = undefined }) {
   }
 
   useEffect(() => {
-    if (countries && countries.length !== 0) {
+    if (countries) {
       findCountry();
     }
   });
 
-  function generateRows(obj) {
-    const fields = Object.keys(obj);
-    const elements = fields.map((itemName) => {
+  function generateRows(countryObj: ICountryFilteredObj) {
+    const fields = Object.keys(countryObj);
+    const elements = fields.map((itemName: string) => {
       let element;
-      if (typeof (obj[itemName]) !== 'object') {
-        element = (
-          <InfoTableRow
-            obj={obj}
-            itemName={itemName}
-          />
-        );
-      }
-      if (Array.isArray(obj[itemName])) {
-        if ((typeof (obj[itemName][0]) === 'string') || (typeof (obj[itemName][0]) === 'number')) {
+      if (Array.isArray(countryObj[itemName])) {
+        if ((typeof (countryObj[itemName][0]) === 'string') || (typeof (countryObj[itemName][0]) === 'number')) {
           element = (
             <InfoTableRow
-              obj={obj}
+              obj={countryObj}
               itemName={itemName}
-              customValue={utils.getListString(obj[itemName])}
+              customValue={utils.getListString(countryObj[itemName])}
             />
           );
         }
+      } else {
+        element = (
+          <InfoTableRow
+            obj={countryObj}
+            itemName={itemName}
+          />
+        );
       }
       return element;
     });
@@ -89,24 +94,24 @@ function CountryInfo({ countries = {}, match = undefined }) {
       <InfoTable>
         <InfoTableHead>
           <tr>
-            <td colSpan="2">
+            <td colSpan={2}>
               <button
                 type="submit"
                 onClick={() => {
-                  context.setFavorites(country.alpha3Code);
+                  if (country) context.setFavorites(country.alpha3Code);
                 }}
               >
                 Add to favorites
               </button>
               <div>
-                <h1>{country.name}</h1>
-                <span>{country.nativeName}</span>
+                <h1>{ (country && country.name) || 'Loading...' }</h1>
+                <span>{ (country && country.nativeName) || 'Loading...' }</span>
               </div>
             </td>
           </tr>
         </InfoTableHead>
         <tbody>
-          { Object.keys(country).length !== 0 && generateRows(country) }
+          { country && generateRows(country) }
         </tbody>
       </InfoTable>
     );

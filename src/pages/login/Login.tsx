@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
-import { Input, Layout } from 'components';
+import { Input, Button, Layout } from 'components';
 
 const LoginFormWrapper = styled.div`
   border: 1px solid #ccc; 
@@ -82,10 +82,7 @@ function Login() {
           <Input label="Password" type="password" onChange={handlePasswordChange} />
           { infoMessage
             && <InfoMessage>{infoMessage}</InfoMessage>}
-          {/* <Button onClick={signIn} disabled={!!infoMessage} title="Sign in" /> */}
-
-          {/* Временный костыль */}
-          <button type="button" onClick={signIn}>kek</button>
+          <Button onClick={signIn} disabled={!!infoMessage} title="Sign in" />
         </LoginForm>
       </LoginFormWrapper>
     </Layout>
