@@ -17,6 +17,16 @@ const LayoutInherited = styled(Layout)`
   flex-direction: column;
 `;
 
+const PageNavi = styled.nav`
+  flex-direction: column;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  a {
+    text-decoration: none;
+    margin: 10px;
+  }
+`;
+
 interface IFavorites {
   [key: string]: any
 }
@@ -26,12 +36,12 @@ interface IFavoriteCountriesContext {
   setFavorites: (countryId: string) => void,
   removeFavorites: (country: ICountryObj) => void,
 }
-
 const contextValue: IFavoriteCountriesContext = {
+
   favorites: {},
   setFavorites: (countryId: string) => {
-    contextValue.favorites[countryId] = true;
   },
+    contextValue.favorites[countryId] = true;
   removeFavorites: (country: ICountryObj) => {
     const id = country.alpha3Code;
     delete contextValue.favorites[id];
@@ -60,15 +70,15 @@ function Main() {
 
   return (
     <LayoutInherited>
-      <nav>
+      <PageNavi>
         <Link to="/">Список стран</Link>
         <Link to="/favorites">Избранное</Link>
-      </nav>
+      </PageNavi>
       <Switch>
         <FavoriteCountriesProvider value={contextValue}>
           <Route exact path="/" render={() => <CountryList countries={countries} />} />
           <Route path="/country/:alpha3Code" render={({ match }) => <CountryInfo countries={countries} match={match} />} />
-          <Route path="/favorites" component={FavoriteCountries} />
+          <Route path="/favorites" render={() => <FavoriteCountries countries={countries} />} />
         </FavoriteCountriesProvider>
       </Switch>
     </LayoutInherited>
