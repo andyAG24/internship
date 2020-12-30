@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { ICountryObj } from '../interfaces/ICountryObj';
 
 const InfoTableRowStyled = styled.tr`
@@ -37,16 +36,5 @@ function InfoTableRow({
     </InfoTableRowStyled>
   );
 }
-
-InfoTableRow.propTypes = {
-  obj: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-    PropTypes.array,
-  ]).isRequired,
-  itemName: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  customValue: PropTypes.any, // Временное
-};
 
 export default InfoTableRow;

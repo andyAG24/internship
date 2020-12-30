@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import {
   Link,
 } from 'react-router-dom';
@@ -24,11 +23,17 @@ const CountryName = styled.span`
   margin-left: 5px;
 `;
 
+type CountryItemTypes = {
+  name: string,
+  flag: string,
+  alpha3Code: string
+};
+
 function CountryItem({
   name,
   flag,
   alpha3Code,
-}) {
+}: CountryItemTypes) {
   return (
     <CountryItemWrapper key={name}>
       <CountryFlag src={flag} alt="Country flag" />
@@ -38,11 +43,5 @@ function CountryItem({
     </CountryItemWrapper>
   );
 }
-
-CountryItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  flag: PropTypes.string.isRequired,
-  alpha3Code: PropTypes.string.isRequired,
-};
 
 export default CountryItem;

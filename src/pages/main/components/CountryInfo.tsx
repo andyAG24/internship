@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useContext } from 'react';
-import PropTypes, { object } from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FavoriteCountriesContext } from '../Main';
@@ -124,11 +123,5 @@ function CountryInfo({ countries, match }: CountryInfoTypes) {
     </LayoutWrapper>
   );
 }
-
-CountryInfo.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  match: PropTypes.any, // Временное решение
-  countries: PropTypes.objectOf(PropTypes.object),
-};
 
 export default CountryInfo;

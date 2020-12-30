@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import Countries from './Countries';
+import { ICountryObj } from '../interfaces/ICountryObj';
 
 const CountryListBlock = styled.ul`
   list-style-type: none;
@@ -11,18 +11,18 @@ const CountryListBlock = styled.ul`
   flex-wrap: wrap;
 `;
 
+type CountryListTypes = {
+  countries: {[index: string]: ICountryObj},
+}
+
 function CountryList({
   countries,
-}) {
+}: CountryListTypes) {
   return (
     <CountryListBlock>
       <Countries countries={countries} />
     </CountryListBlock>
   );
 }
-
-CountryList.propTypes = {
-  countries: PropTypes.objectOf(PropTypes.object).isRequired,
-};
 
 export default CountryList;

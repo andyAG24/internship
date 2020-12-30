@@ -26,9 +26,6 @@ interface IFavoriteCountriesContext {
   setFavorites: (countryId: string) => void,
   removeFavorites: (country: ICountryObj) => void,
 }
-export const FavoriteCountriesContext = React.createContext<IFavoriteCountriesContext>();
-export const FavoriteCountriesProvider = FavoriteCountriesContext.Provider;
-export const FavoriteCountriesConsumer = FavoriteCountriesContext.Consumer;
 
 const contextValue: IFavoriteCountriesContext = {
   favorites: {},
@@ -41,8 +38,11 @@ const contextValue: IFavoriteCountriesContext = {
   },
 };
 
+export const FavoriteCountriesContext = React.createContext<IFavoriteCountriesContext>(contextValue);
+export const FavoriteCountriesProvider = FavoriteCountriesContext.Provider;
+
 function Main() {
-  const [countries, setCountries] = useState({});
+  const [countries, setCountries] = useState<ICountryObj | {}>({});
 
   async function gettingCountries() {
     fetch(API_URL)

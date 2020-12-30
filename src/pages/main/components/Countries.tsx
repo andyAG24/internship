@@ -1,8 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { ICountryObj } from 'pages/main/interfaces/ICountryObj';
 import CountryItem from './CountryItem';
 
-function Countries({ countries }) {
+type CountriesTypes = {
+  countries: {[index: string]: ICountryObj},
+}
+
+function Countries({ countries }: CountriesTypes) {
   return (
     <>
       { Object.keys(countries).map((item) => (
@@ -16,9 +20,5 @@ function Countries({ countries }) {
     </>
   );
 }
-
-Countries.propTypes = {
-  countries: PropTypes.objectOf(PropTypes.object),
-};
 
 export default Countries;
