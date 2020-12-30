@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FavoriteCountriesContext } from '../Main';
 import InfoTableRow from './InfoTableRow';
-import { ICountryFilteredObj } from './ICountryFilteredObj';
+import { ICountryObj } from '../interfaces/ICountryObj';
 
 const utils = require('utils/Utils');
 
@@ -42,13 +42,13 @@ const StarIcon = styled.img`
 `;
 
 type CountryInfoTypes = {
-  countries: {[index: string]: ICountryFilteredObj},
+  countries: {[index: string]: ICountryObj},
   match: any
 }
 
 function CountryInfo({ countries, match }: CountryInfoTypes) {
   const { alpha3Code } = match.params;
-  const [country, setCountry] = useState<ICountryFilteredObj>();
+  const [country, setCountry] = useState<ICountryObj>();
 
   const context = useContext(FavoriteCountriesContext);
 
@@ -62,7 +62,7 @@ function CountryInfo({ countries, match }: CountryInfoTypes) {
     }
   });
 
-  function generateRows(countryObj: ICountryFilteredObj) {
+  function generateRows(countryObj: ICountryObj) {
     const fields = Object.keys(countryObj);
     const elements = fields.map((itemName: string) => {
       let element;

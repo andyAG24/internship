@@ -7,37 +7,37 @@ export interface ICountryRawObj {
   callingCodes: Array<string>,
   capital: string,
   cioc: string,
-  currencies: Array<CurrencyObj>,
+  currencies: Array<ICurrencyObj>,
   demonym: string,
   flag: string,
   gini: number,
-  languages: Array<LanguageObj>,
+  languages: Array<ILanguageObj>,
   latlng: Array<number>,
   name: string,
   nativeName: string,
   numericCode: string,
   population: number,
   region: string,
-  regionalBlocs: Array<RegionalBlocObj>,
+  regionalBlocs: Array<IRegionalBlocObj>,
   subregion: string,
   timezones: Array<number>,
   topLevelDomain: Array<number>,
 }
 
-export interface CurrencyObj {
+export interface ICurrencyObj {
   code: string,
   name: string,
   symbol: string,
 }
 
-export interface LanguageObj {
+export interface ILanguageObj {
   iso639_1: string,
   iso639_2: string,
   name: string,
   nativeName: string,
 }
 
-export interface RegionalBlocObj {
+export interface IRegionalBlocObj {
   acronym: string,
   name: string,
   otherAcronyms: Array<string>,

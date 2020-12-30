@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { ICountryFilteredObj } from './ICountryFilteredObj';
+import { ICountryObj } from '../interfaces/ICountryObj';
 
 const InfoTableRowStyled = styled.tr`
   th {
@@ -14,7 +14,7 @@ const InfoTableRowStyled = styled.tr`
 `;
 
 type InfoTableRowProps = {
-  obj: ICountryFilteredObj,
+  obj: ICountryObj,
   itemName: string,
   customValue?: string
 };

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Layout } from 'components';
 import { CountryInfo, CountryList, FavoriteCountries } from './components';
-import { ICountryFilteredObj } from './components/ICountryFilteredObj';
+import { ICountryObj } from './interfaces/ICountryObj';
 
 const utils = require('utils/Utils');
 
@@ -24,7 +24,7 @@ interface IFavorites {
 interface IFavoriteCountriesContext {
   favorites: IFavorites,
   setFavorites: (countryId: string) => void,
-  removeFavorites: (country: ICountryFilteredObj) => void,
+  removeFavorites: (country: ICountryObj) => void,
 }
 export const FavoriteCountriesContext = React.createContext<IFavoriteCountriesContext>();
 export const FavoriteCountriesProvider = FavoriteCountriesContext.Provider;
@@ -35,7 +35,7 @@ const contextValue: IFavoriteCountriesContext = {
   setFavorites: (countryId: string) => {
     contextValue.favorites[countryId] = true;
   },
-  removeFavorites: (country: ICountryFilteredObj) => {
+  removeFavorites: (country: ICountryObj) => {
     const id = country.alpha3Code;
     delete contextValue.favorites[id];
   },

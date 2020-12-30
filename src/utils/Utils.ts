@@ -1,7 +1,7 @@
-import { ICountryFilteredObj } from 'pages/main/components/ICountryFilteredObj';
-import { ICountryRawObj } from 'pages/main/components/ICountryRawObj';
+import { ICountryObj } from 'pages/main/interfaces/ICountryObj';
+import { ICountryRawObj } from 'pages/main/interfaces/ICountryRawObj';
 
-export const getListString = (obj: ICountryFilteredObj[]): string => {
+export const getListString = (obj: ICountryObj[]): string => {
   let output = '';
   obj.forEach((item: any) => {
     output += item;

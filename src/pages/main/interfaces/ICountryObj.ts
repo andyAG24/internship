@@ -1,4 +1,4 @@
-export interface ICountryFilteredObj {
+export interface ICountryObj {
   alpha3Code: string,
   altSpellings: Array<string>,
   area: number,
@@ -17,5 +17,3 @@ export interface ICountryFilteredObj {
   topLevelDomain: Array<number>,
   [key: string]: any
 }
-
-// 'translations',
