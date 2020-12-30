@@ -1,6 +1,4 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ChangeEvent } from 'react';
-import React from 'react';
 import styled from 'styled-components';
 
 const InputWrapper = styled.div`

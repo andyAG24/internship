@@ -31,6 +31,9 @@ const TitleWrapper = styled.div`
   align-items: center;
 `;
 
+const LayoutWrapper = styled.div`
+`;
+
 const CountryFlag = styled.img`
   flex-grow: 1;
   width: 70px;
@@ -49,7 +52,7 @@ type CountryInfoTypes = {
 
 function CountryInfo({ countries, match }: CountryInfoTypes) {
   const { alpha3Code } = match.params;
-  const [country, setCountry] = useState<ICountryObj>();
+  const [country, setCountry] = useState<ICountryObj>(Object);
   const [isFavorite, setIsFavorite] = useState(false);
 
   const context = useContext(FavoriteCountriesContext);
@@ -62,7 +65,7 @@ function CountryInfo({ countries, match }: CountryInfoTypes) {
     if (countries) {
       findCountry();
     }
-    if (country && context.favorites.has(country.alpha3Code)) {
+    if (country && context.favorites[country.alpha3Code]) {
       setIsFavorite(true);
     }
   });
@@ -78,6 +81,7 @@ function CountryInfo({ countries, match }: CountryInfoTypes) {
               obj={countryObj}
               itemName={itemName}
               customValue={utils.getListString(countryObj[itemName])}
+              key={itemName}
             />
           );
         }
@@ -86,6 +90,7 @@ function CountryInfo({ countries, match }: CountryInfoTypes) {
           <InfoTableRow
             obj={countryObj}
             itemName={itemName}
+            key={itemName}
           />
         );
       }
@@ -103,14 +108,16 @@ function CountryInfo({ countries, match }: CountryInfoTypes) {
             context.setFavorites(country.alpha3Code);
             setIsFavorite(true);
           }}
+          disabled={false}
         />
       ) : (
         <Button
           title="Убрать из избранного"
           onClick={() => {
-            context.removeFavorites(country.alpha3Code);
+            context.removeFavorites(country);
             setIsFavorite(false);
           }}
+          disabled={false}
         />
       );
   }
@@ -120,12 +127,12 @@ function CountryInfo({ countries, match }: CountryInfoTypes) {
       <InfoTable>
         <InfoTableHead>
           <tr>
-            <td colSpan="2">
+            <td colSpan={2}>
               <TitleWrapper>
-                <CountryFlag src={country.flag} alt="Flag" />
+                <CountryFlag src={country && country.flag} alt="Flag" />
                 <CountryName>
-                  <h1>{country.name}</h1>
-                  <span>{country.nativeName}</span>
+                  <h1>{country && country.name}</h1>
+                  <span>{country && country.nativeName}</span>
                 </CountryName>
               </TitleWrapper>
               { renderAddToFavButton() }

@@ -37,11 +37,10 @@ interface IFavoriteCountriesContext {
   removeFavorites: (country: ICountryObj) => void,
 }
 const contextValue: IFavoriteCountriesContext = {
-
   favorites: {},
   setFavorites: (countryId: string) => {
-  },
     contextValue.favorites[countryId] = true;
+  },
   removeFavorites: (country: ICountryObj) => {
     const id = country.alpha3Code;
     delete contextValue.favorites[id];
