@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { useStore } from 'react-redux';
 import Countries from './Countries';
-import { FavoriteCountriesContext } from '../Main';
 import { ICountryObj } from '../interfaces/ICountryObj';
 
 type FavoriteCountriesTypes = {
@@ -9,12 +8,15 @@ type FavoriteCountriesTypes = {
 };
 
 function FavoriteCountries({ countries }: FavoriteCountriesTypes) {
-  const context = useContext(FavoriteCountriesContext);
+  const store = useStore();
 
   function getFavoriteCountriesObject() {
+    const allCountries = store.getState().favoriteCountries;
     const filtered: {[key: string]: ICountryObj} = {};
-    Object.keys(context.favorites).forEach((item: string) => {
-      filtered[item] = countries[item];
+    Object.keys(allCountries).forEach((item: string) => {
+      if (allCountries[item]) {
+        filtered[item] = countries[item];
+      }
     });
     return filtered;
   }
@@ -23,9 +25,5 @@ function FavoriteCountries({ countries }: FavoriteCountriesTypes) {
     <Countries countries={getFavoriteCountriesObject()} />
   );
 }
-
-FavoriteCountries.propTypes = {
-  countries: PropTypes.objectOf(PropTypes.object),
-};
 
 export default FavoriteCountries;

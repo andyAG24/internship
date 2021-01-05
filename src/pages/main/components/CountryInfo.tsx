@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useDispatch, useStore } from 'react-redux';
 import { Button } from 'components';
-import { FavoriteCountriesContext } from '../Main';
+import { addCountry, removeCountry } from 'store/favoriteCountries/actions';
 import InfoTableRow from './InfoTableRow';
 import { ICountryObj } from '../interfaces/ICountryObj';
 
@@ -51,11 +51,11 @@ type CountryInfoTypes = {
 }
 
 function CountryInfo({ countries, match }: CountryInfoTypes) {
+  const dispatch = useDispatch();
+  const store = useStore();
   const { alpha3Code } = match.params;
   const [country, setCountry] = useState<ICountryObj>(Object);
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  const context = useContext(FavoriteCountriesContext);
+  const [isFavorite, setIsFavorite] = useState(store.getState().favoriteCountries[alpha3Code]);
 
   function findCountry() {
     setCountry(countries[alpha3Code]);
@@ -64,9 +64,6 @@ function CountryInfo({ countries, match }: CountryInfoTypes) {
   useEffect(() => {
     if (countries) {
       findCountry();
-    }
-    if (country && context.favorites[country.alpha3Code]) {
-      setIsFavorite(true);
     }
   });
 
@@ -105,7 +102,7 @@ function CountryInfo({ countries, match }: CountryInfoTypes) {
         <Button
           title="Добавить в избранное"
           onClick={() => {
-            context.setFavorites(country.alpha3Code);
+            dispatch(addCountry(country));
             setIsFavorite(true);
           }}
           disabled={false}
@@ -114,7 +111,7 @@ function CountryInfo({ countries, match }: CountryInfoTypes) {
         <Button
           title="Убрать из избранного"
           onClick={() => {
-            context.removeFavorites(country);
+            dispatch(removeCountry(country));
             setIsFavorite(false);
           }}
           disabled={false}
